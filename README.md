@@ -50,20 +50,57 @@ Let's delete the appropriate information from `usersContact`, `usersAddress` and
 ## SQL Statements
 
 1. INSERT two users:
+  
+   INSERT INTO users(first_name, last_name)
+   values ('test', 'user'),
+	 ('test2', 'user');
 
+   SELECT * from users;
 
 2. UPDATE all Ohio addresses to "REDACTED":
+  
+   SELECT * from usersAddress;
+   UPDATE usersAddress
+   SET address = "REDACTED" 
+   WHERE state = "OH"; 
+
+   SELECT * from usersAddress; 
+
 
 3. All three DELETES
 
-* DELETE from usersContact
+* DELETE from usersContact:
+
+ALTER TABLE usersContact
+drop CONSTRAINT usersContact_ibfk_1;
+
+ALTER TABLE usersContact
+ADD CONSTRAINT usersContact_ibfk_1
+    FOREIGN KEY (user_id)
+    REFERENCES users (id)
+ON DELETE CASCADE ON UPDATE NO ACTION; 
+       
+DELETE FROM users WHERE id = 114;  
 
 
-* DELETE from usersAddress
+
+* DELETE from usersAddress:
+
+ALTER TABLE usersAddress
+drop CONSTRAINT usersAddress_ibfk_1;
+
+ALTER TABLE usersAddress
+ADD CONSTRAINT usersAddress_ibfk_1
+    FOREIGN KEY (user_id)
+    REFERENCES users (id)
+ON DELETE CASCADE ON UPDATE NO ACTION; 
+       
+DELETE FROM users WHERE id = 114;  
+
 
 
 * DELETE from users
-
+DELETE FROM users WHERE id = 114;  
 
 ## Summary
 
